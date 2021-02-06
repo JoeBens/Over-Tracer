@@ -25,6 +25,7 @@ public:
 		float b = sqrt(scale*color[2]);
 
 
+
 		out << static_cast<int>(255.0f*clamp(r, 0.0f, 0.999f)) << " "<<
 			   static_cast<int>(255.0f*clamp(g, 0.0f, 0.999f)) << " "<<
 			   static_cast<int>(255.0f*clamp(b, 0.0f, 0.999f)) << " ";
