@@ -2,7 +2,7 @@
 
 #include "Color.h"
 #include <vector>
-
+#include <memory>
 #define MAX_PIXEL_VALUE 255
 
 class Image
@@ -18,6 +18,5 @@ class Image
 		int m_height;
 		int m_width;
 		std::vector<Color> m_pixels;
-};
 };
 

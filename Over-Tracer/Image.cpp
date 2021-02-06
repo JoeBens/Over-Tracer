@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Vector3.h"
 #include "Color.h"
-#include "Vector3.cpp"
+#include <memory>
 
 
 Image::Image(int width, int height) :m_width(width),
@@ -24,7 +24,7 @@ bool Image::save(const char* filepath) {
 
 
 	for (auto& c : m_pixels) {
-		file << *(c.gammaCorrect()) << std::endl;
+		file << c << std::endl;
 	}
 
 	return true;

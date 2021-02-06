@@ -1,9 +1,7 @@
 #include "Vector3.h"
 #include <math.h>
 #include <iostream>
-#include <random>
-
-#include "core.h"
+#include "Core.h"
 //Empty Constructor
 Vector3::Vector3() {
 	m_coordinates[0] = 0.0f;
@@ -27,7 +25,7 @@ Vector3::Vector3(const Vector3& v) {
 
 
 #pragma region Operators
-Vector3& Vector3::operator+(const Vector3& v) {
+const Vector3& Vector3::operator+(const Vector3& v) const {
 
 	Vector3* res = new Vector3(); // empty
 
@@ -39,7 +37,7 @@ Vector3& Vector3::operator+(const Vector3& v) {
 }
 
 
-Vector3& Vector3::operator-(const Vector3& v) {
+const Vector3& Vector3::operator-(const Vector3& v) const {
 	Vector3* res = new Vector3(); // empty
 
 	(*res)[0] = m_coordinates[0] - v[0];
@@ -49,7 +47,7 @@ Vector3& Vector3::operator-(const Vector3& v) {
 	return *res;
 }
 
-Vector3& Vector3::operator*(const float& k) {
+const Vector3& Vector3::operator*(const float& k) const {
 
 	Vector3* res = new Vector3(); // empty
 
@@ -61,7 +59,7 @@ Vector3& Vector3::operator*(const float& k) {
 
 }
 
-Vector3& Vector3::operator/(const float& k) {
+const Vector3& Vector3::operator/(const float& k) const {
 
 	if (k == 0) {
 		return *this;
@@ -76,7 +74,7 @@ Vector3& Vector3::operator/(const float& k) {
 	return *res;
 }
 
-Vector3& Vector3::operator+=(const Vector3& v) {
+const Vector3& Vector3::operator+=(const Vector3& v) {
 
 	m_coordinates[0] += v[0];
 	m_coordinates[1] += v[1];
@@ -87,7 +85,7 @@ Vector3& Vector3::operator+=(const Vector3& v) {
 }
 
 
-Vector3& Vector3::operator-=(const Vector3& v) {
+const Vector3& Vector3::operator-=(const Vector3& v) {
 
 	m_coordinates[0] -= v[0];
 	m_coordinates[1] -= v[1];
@@ -98,7 +96,7 @@ Vector3& Vector3::operator-=(const Vector3& v) {
 }
 
 
-Vector3& Vector3::operator*=(const float& k) {
+const Vector3& Vector3::operator*=(const float& k) {
 
 	m_coordinates[0] *= k;
 	m_coordinates[1] *= k;
@@ -120,7 +118,7 @@ float Vector3::operator[](int index) const {
 
 
 //Cross product
-Vector3& Vector3::cross(const Vector3& v) {
+const Vector3& Vector3::cross(const Vector3& v) const {
 
 	Vector3* res = new Vector3(); // empty
 
@@ -134,7 +132,7 @@ Vector3& Vector3::cross(const Vector3& v) {
 
 
 //Dot product
-float Vector3::dot(const Vector3& v) {
+float Vector3::dot(const Vector3& v) const {
 	return m_coordinates[0] * v[0] +
 		m_coordinates[1] * v[1] +
 		m_coordinates[2] * v[2];
@@ -144,33 +142,15 @@ float Vector3::dot(const Vector3& v) {
 
 
 //Normalize
-float Vector3::norm() {
+float Vector3::norm() const{
 	return sqrt(m_coordinates[0] * m_coordinates[0] +
 		m_coordinates[1] * m_coordinates[1] +
 		m_coordinates[2] * m_coordinates[2]);
 }
 
-Vector3& Vector3::normalize() {
+const Vector3& Vector3::normalize() const{
 	return *this / this->norm();
 }
 
 
-inline static const Vector3& random() {
-	return Vector3(random_double(), random_double(), random_double());
-}
 
-inline static std::shared_ptr<Vector3> random(float min, float max) {
-	return std::make_shared<Vector3>(random_double(min, max), random_double(min, max), random_double(min, max));
-}
-
-inline static std::shared_ptr<Vector3> random_unit_sphere() {
-	while (true) {
-		auto p = random(-1.0f, 1.0f);
-		if (p->norm() >= 1) continue;
-		return p;
-	}
-}
-
-inline static const Vector3& random_unit_vector() {
-	return random_unit_sphere()->normalize();
-}
