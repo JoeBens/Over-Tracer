@@ -1,8 +1,9 @@
 #include "Vector3.h"
 #include <math.h>
 #include <iostream>
+#include <random>
 
-
+#include "core.h"
 //Empty Constructor
 Vector3::Vector3() {
 	m_coordinates[0] = 0.0f;
@@ -142,7 +143,7 @@ float Vector3::dot(const Vector3& v) {
 
 
 
-
+//Normalize
 float Vector3::norm() {
 	return sqrt(m_coordinates[0] * m_coordinates[0] +
 		m_coordinates[1] * m_coordinates[1] +
@@ -151,4 +152,25 @@ float Vector3::norm() {
 
 Vector3& Vector3::normalize() {
 	return *this / this->norm();
+}
+
+
+inline static const Vector3& random() {
+	return Vector3(random_double(), random_double(), random_double());
+}
+
+inline static std::shared_ptr<Vector3> random(float min, float max) {
+	return std::make_shared<Vector3>(random_double(min, max), random_double(min, max), random_double(min, max));
+}
+
+inline static std::shared_ptr<Vector3> random_unit_sphere() {
+	while (true) {
+		auto p = random(-1.0f, 1.0f);
+		if (p->norm() >= 1) continue;
+		return p;
+	}
+}
+
+inline static const Vector3& random_unit_vector() {
+	return random_unit_sphere()->normalize();
 }

@@ -26,10 +26,23 @@ public:
 	float dot(const Vector3& v);
 
 
-private:
+	inline static const Vector3& random();
+	inline static std::shared_ptr<Vector3> random(float min, float max);
+	inline static std::shared_ptr<Vector3> random_unit_sphere();
+	inline static const Vector3& random_unit_vector();
+
+
+
+
+
+protected:
 	float m_coordinates[3];
 
 
 
 };
 
+std::ostream& operator<< (std::ostream& out, Vector3& v) {
+	out << v[0] << " " << v[1] << " " << v[2] << std::endl;
+	return out;
+}

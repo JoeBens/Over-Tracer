@@ -1,5 +1,2 @@
 #pragma once
-class Point
-{
-};
-
+#define Point3 Vector3
