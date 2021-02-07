@@ -9,6 +9,65 @@
 #include "Camera.h"
 #include <iomanip>
 
+struct LightSource {
+	Color m_color;
+	Vector3 position;
+
+	LightSource() :m_color("e4ff00"), position(1.0f, 1.0f, -5.0f){}
+};
+
+struct LightSource ls;
+
+
+
+
+//Color color(const Ray& ray, const HitList& world, int depth) {
+//	//std::cout << ray.direction().norm();
+//
+//
+//
+//
+//	int ns = 50;
+//	if (depth <= 0) {
+//		return Color("000000");
+//	}
+//
+//	HitRecord rec;
+//	if (world.hit(ray, 0.0001f, 100000.0f, rec)) {
+//		//return EPIC::Color("FFC107");
+//		//return EPIC::Color(((EPIC::Vec3<float>(1.0f, 1.0f, 1.0f) + rec.normal))*0.5f);
+//		auto p = rec.position + rec.normal + Vector3::random_unit_vector();
+//		auto reflected = rec.position - p;
+//		//auto c = color(Ray(rec.position,reflected ), world, depth - 1);
+//		auto objColor = Color("fe6060");
+//		auto ks = 1.0f;
+//		auto kd = 0.5f;
+//		auto ka = 0.5f;
+//		auto to_light =Ray(rec.position, ls.position - rec.position);
+//
+//		auto tmp = rec.normal.dot(to_light.direction());
+//		//std::cout << tmp << std::endl;
+//		auto diffuse = objColor*kd*MAX(tmp, 0);
+//		//auto diffuse = Vector3();
+//		tmp = pow(rec.normal.dot(to_light.direction()), ns);
+//		auto specular = objColor *ks *MAX(tmp, 0);
+//		auto specular = Vector3();
+//		//to_light.m_origin = to_light.pointAt(1.0f);
+//		/*bool intersects = world.hit(to_light, 0.0001f, 100000.0f, rec);
+//		return (diffuse + specular)*(1.0f-intersects);*/
+//
+//		return (diffuse + specular);
+//
+//	}
+//
+//	float t = 0.5*(ray.direction()[1] + 1.0);
+//	auto white = Color("FFFFFF");
+//	auto main = Color("03a9f4");
+//
+//
+//	return main * (1.0 - t) + white * t;
+//}
+
 Color color(const Ray& ray, const HitList& world, int depth) {
 	//std::cout << ray.direction().norm();
 
@@ -23,7 +82,7 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 		//return EPIC::Color(((EPIC::Vec3<float>(1.0f, 1.0f, 1.0f) + rec.normal))*0.5f);
 		auto p = rec.position + rec.normal + Vector3::random_unit_vector();
 		auto reflected = rec.position - p;
-		auto c = color(Ray(rec.position,reflected ), world, depth - 1);
+		auto c = color(Ray(rec.position, reflected), world, depth - 1);
 		auto objColor = Color("2E3241");
 		auto ks = 0.0f;
 		auto kd = 0.5f;
@@ -31,7 +90,7 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 		auto tmp = rec.normal.dot(reflected);
 		//std::cout << tmp << std::endl;
-		auto diffuse =c*kd;
+		auto diffuse = c * kd;
 		auto specular = Vector3();
 
 		return diffuse + specular;
@@ -45,7 +104,6 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 	return main * (1.0 - t) + white * t;
 }
-
 
 
 

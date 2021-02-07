@@ -16,9 +16,10 @@ public:
 	const Vector3& pointAt(float dist) const {
 		return m_direction * dist + m_origin;
 	}
-
+	
 private:
 	Vector3 m_direction;
 	Vector3 m_origin;
+	
 };
 
