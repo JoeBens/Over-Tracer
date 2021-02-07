@@ -6,9 +6,10 @@
 class Sphere : virtual public Object, public Hitable
 {
 public:
-	Sphere(const Vector3& origin, float radius) {
+	Sphere(const Vector3& origin, float radius, const Color &c){
 		Object::m_position = origin;
 		m_radius = radius;
+		m_c = c;
 	}
 
 
@@ -48,6 +49,7 @@ public:
 		record.t = root;
 		record.position = ray.pointAt(root);
 		record.normal = normalAt(record.position);
+		record.m_c = m_c;
 
 
 		return true;
@@ -56,6 +58,7 @@ public:
 
 private:
 	float m_radius;
+	Color m_c;
 
 
 };

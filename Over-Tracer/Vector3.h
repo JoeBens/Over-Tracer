@@ -23,6 +23,8 @@ public:
 	float& operator[](int index);
 	float operator[](int index) const;
 
+	const Vector3& multElements(const float& e1, const float& e2, const float& e3);
+
 	const Vector3& cross(const Vector3& v) const;
 
 	float norm() const;

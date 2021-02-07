@@ -83,14 +83,14 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 		auto p = rec.position + rec.normal + Vector3::random_unit_vector();
 		auto reflected = rec.position - p;
 		auto c = color(Ray(rec.position, reflected), world, depth - 1);
-		auto objColor = Color("2E3241");
+		auto objColor = rec.m_c;
 		auto ks = 0.0f;
 		auto kd = 0.5f;
 
 
 		auto tmp = rec.normal.dot(reflected);
 		//std::cout << tmp << std::endl;
-		auto diffuse = c * kd;
+		auto diffuse = c.multElements(objColor[0], objColor[1], objColor[2]);
 		auto specular = Vector3();
 
 		return diffuse + specular;
@@ -99,7 +99,7 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 	float t = 0.5*(ray.direction()[1] + 1.0);
 	auto white = Color("FFFFFF");
-	auto main = Color("03a9f4");
+	auto main = Color("958ace");
 
 
 	return main * (1.0 - t) + white * t;
@@ -112,8 +112,10 @@ int main()
     std::cout << "Hello World!\n";
 	// world
 	HitList world;
-	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, -1.0f), 0.5f));
-	world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f));
+	world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a")));
+	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb")));
+	world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b")));
+	world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d")));
 
 	Camera camera(WIDTH, HEIGHT);
 	Image img(WIDTH, HEIGHT);

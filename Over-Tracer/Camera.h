@@ -12,9 +12,8 @@ public:
 
 		origin[0] = 0.0f;
 		origin[1] = 0.0f;
-		origin[2] = -4.0f;
-		origin[2] = -4.0f;
-		origin[2] = -4.0f;
+		origin[2] = -10.0f;
+
 
 		viewPortHeight = height;
 		viewPortWidth = width;

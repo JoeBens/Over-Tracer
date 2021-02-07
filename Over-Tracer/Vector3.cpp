@@ -152,5 +152,14 @@ const Vector3& Vector3::normalize() const{
 	return *this / this->norm();
 }
 
+const Vector3& Vector3::multElements(const float& e1, const float& e2, const float& e3) {
+	
+	Vector3* res = new Vector3(m_coordinates[0] * e1,
+		m_coordinates[1] * e2,
+		m_coordinates[2] * e3); // empty
+
+	return *res;
+
+}
 
 

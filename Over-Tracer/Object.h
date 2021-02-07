@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Ray.h"
+#include "Color.h"
 class Object
 {
 public:
@@ -20,6 +21,7 @@ struct HitRecord {
 	Vector3 position;
 	Vector3 normal;
 	float t;
+	Color m_c;
 };
 
 
