@@ -97,9 +97,9 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 	}
 
-	float t = 0.5*(ray.direction()[1] + 1.0);
-	auto white = Color("FFFFFF");
-	auto main = Color("958ace");
+	float t = 0.9*(ray.direction())[0];
+	auto white = Color("000000");
+	auto main = Color("f3eac3");
 
 
 	return main * (1.0 - t) + white * t;
