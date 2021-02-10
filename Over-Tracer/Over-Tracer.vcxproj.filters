@@ -45,9 +45,6 @@
     <ClCompile Include="Material.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>

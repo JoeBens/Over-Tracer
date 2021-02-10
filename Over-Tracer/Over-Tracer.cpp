@@ -94,7 +94,6 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 		auto specular = Vector3();
 
 		return diffuse + specular;
-
 	}
 
 	float t = 0.9*(ray.direction())[0];
@@ -149,10 +148,6 @@ int main()
 				std::cout << "Progress: " << steps_completed << " of " << total_steps << " (" << std::fixed << std::setprecision(1) << (100.0*steps_completed / total_steps) << "%)\n";
 			}
 		}
-		
-
-
-		
 	}
 	img.save("test.ppm");
 	return 0;

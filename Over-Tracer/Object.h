@@ -2,19 +2,20 @@
 #include "Vector3.h"
 #include "Ray.h"
 #include "Color.h"
+#include "Material.h"
 class Object
 {
-public:
+	public:
 
-	virtual const Vector3& normalAt(const Vector3& point) const { return point; };
-	virtual const Vector3& scatter(const Vector3& point) const { return point; };
+		virtual const Vector3& normalAt(const Vector3& point) const { return point; };
+		virtual const Vector3& scatter(const Vector3& point) const { return point; };
 
-	void move(const Vector3& position) {
-		m_position = position;
-	}
+		void move(const Vector3& position) {
+			m_position = position;
+		}
 
 
-protected:
+	protected:
 	Vector3 m_position;
 };
 struct HitRecord {
@@ -22,6 +23,7 @@ struct HitRecord {
 	Vector3 normal;
 	float t;
 	Color m_c;
+	//Material m_material;
 };
 
 

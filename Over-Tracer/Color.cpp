@@ -4,31 +4,7 @@
 
 #include "Core.h"
 
-
-//float clamp(float c) {
-//	float o = static_cast<int>(c * 255);
-//	o = MAX(0, o);
-//	return MIN(o, 255);
-//
-//	/*
-//	
-//	if(c > max){
-//	return max
-//
-//	if(c < min){
-//	return min
-//	}
-//
-//	return c:
-//	*/
-//}
-
-
 float clamp(float c, float min, float max) {
-	/*float o = static_cast<int>(c * 255);
-	o = MAX(0, o);
-	return MIN(o, 255);*/
-
 
 	if(c > max)
 		return max;
