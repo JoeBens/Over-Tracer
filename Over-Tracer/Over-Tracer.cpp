@@ -68,6 +68,45 @@ struct LightSource ls;
 //	return main * (1.0 - t) + white * t;
 //}
 
+//Matte
+//Color color(const Ray& ray, const HitList& world, int depth) {
+//	//std::cout << ray.direction().norm();
+//
+//	int ns = 50;
+//	if (depth <= 0) {
+//		return Color("000000");
+//	}
+//
+//	HitRecord rec;
+//	if (world.hit(ray, 0.0001f, 100000.0f, rec)) {
+//		//return EPIC::Color("FFC107");
+//		//return EPIC::Color(((EPIC::Vec3<float>(1.0f, 1.0f, 1.0f) + rec.normal))*0.5f);
+//
+//		auto p = rec.position + rec.normal + Vector3::random_unit_vector();
+//		auto reflected = rec.position - p;
+//		auto c = color(Ray(rec.position, reflected), world, depth - 1);
+//		auto objColor = rec.m_c;
+//		auto ks = 0.0f;
+//		auto kd = 0.5f;
+//		//std::cout << "I am here" << std::endl;
+//
+//
+//		auto tmp = rec.normal.dot(reflected);
+//		//std::cout << tmp << std::endl;
+//		auto diffuse = c.multElements(objColor[0], objColor[1], objColor[2]);
+//		auto specular = Vector3();
+//
+//		return diffuse + specular;
+//	}
+//
+//	float t = 0.9*(ray.direction())[0];
+//	auto white = Color("000000");
+//	auto main = Color("f3eac3");
+//
+//
+//	return main * (1.0 - t) + white * t;
+//}
+
 Color color(const Ray& ray, const HitList& world, int depth) {
 	//std::cout << ray.direction().norm();
 
@@ -75,30 +114,66 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 	if (depth <= 0) {
 		return Color("000000");
 	}
-
 	HitRecord rec;
 	if (world.hit(ray, 0.0001f, 100000.0f, rec)) {
-		//return EPIC::Color("FFC107");
-		//return EPIC::Color(((EPIC::Vec3<float>(1.0f, 1.0f, 1.0f) + rec.normal))*0.5f);
-		auto p = rec.position + rec.normal + Vector3::random_unit_vector();
-		auto reflected = rec.position - p;
-		auto c = color(Ray(rec.position, reflected), world, depth - 1);
-		auto objColor = rec.m_c;
-		auto ks = 0.0f;
-		auto kd = 0.5f;
 
 
-		auto tmp = rec.normal.dot(reflected);
-		//std::cout << tmp << std::endl;
-		auto diffuse = c.multElements(objColor[0], objColor[1], objColor[2]);
-		auto specular = Vector3();
 
-		return diffuse + specular;
+		if (rec.ty == Metal) {
+
+			auto p = rec.position + rec.normal + Vector3::random_unit_vector();
+			auto reflectedRay = Ray(Vector3(), Vector3());
+
+			//std::cout << "I am here" << std::endl;
+			auto reflected = Vector3::reflect((ray.direction() * ray.norm), rec.normal);
+			reflectedRay = Ray(rec.position, reflected);
+			auto objColor = rec.m_c;
+			auto r = (ray.direction() * ray.norm).dot(rec.normal);
+
+			if (r > 0) {
+				auto c = color(reflectedRay, world, depth - 1);
+				auto res = c.multElements(objColor[0], objColor[1], objColor[2]);
+				//std::cout << "I am heeeeeeeeeeeeeeeeeeere" << std::endl;
+				return res;
+			}
+
+		}
+
+		if (rec.ty == Diffuse) {
+
+			auto p = rec.position + rec.normal + Vector3::random_unit_vector();
+			auto reflected = rec.position - p;
+			auto c = color(Ray(rec.position, reflected), world, depth - 1);
+			auto objColor = rec.m_c;
+			auto ks = 0.0f;
+			auto kd = 0.5f;
+			//std::cout << "I am here" << std::endl;
+			
+			
+			auto tmp = rec.normal.dot(reflected);
+			//std::cout << tmp << std::endl;
+			auto diffuse = c.multElements(objColor[0], objColor[1], objColor[2]);
+			auto specular = Vector3();
+			
+			return diffuse + specular;
+		}
+
+
+		if (rec.ty == Luminous) {
+			auto objColor = rec.m_c;
+			return objColor * 10.0f;
+		}
+
+
+
+		
+
+		return Color("111111");
 	}
 
-	float t = 0.9*(ray.direction())[0];
+	float t = 0.9 * (ray.direction())[0];
 	auto white = Color("000000");
-	auto main = Color("f3eac3");
+	auto main = Color("F7FFAD");
 
 
 	return main * (1.0 - t) + white * t;
@@ -109,12 +184,27 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 int main()
 {
     std::cout << "Hello World!\n";
+
+	auto color1 = std::make_shared<Color>("212121"); // plan
+	auto color2 = std::make_shared<Color>("CCCCCC"); // silver
+	auto color3 = std::make_shared<Color>("536DFE"); // zerga
+	auto color4 = std::make_shared<Color>("E91E63"); // rose
+	auto color5 = std::make_shared<Color>("CDDC39"); // khedhra
+
 	// world
 	HitList world;
-	world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a")));
-	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb")));
-	world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b")));
-	world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d")));
+	world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a"),Metal));
+	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb"), Luminous));
+	world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b"), Metal));
+	world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d"), Diffuse));
+	world.add(std::make_shared<Sphere>(Vector3(-30.0f, 90.5f, -15.0f), 100.0f, Color("000000"), Diffuse));
+
+
+	//world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a")));
+	//world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb")));
+	//world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b")));
+	//world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d")));
+
 
 	Camera camera(WIDTH, HEIGHT);
 	Image img(WIDTH, HEIGHT);

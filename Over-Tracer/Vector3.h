@@ -158,6 +158,12 @@ public:
 		return random_unit_sphere()->normalize();
 	}
 
+	inline static Vector3 reflect(const Vector3& in, const Vector3& normal) {
+		return in - (normal * (in.dot(normal) * 2.0f));
+	}
+
+
+
 	friend std::ostream& operator<< (std::ostream& out, Vector3& v) {
 		out << v[0] << " " << v[1] << " " << v[2] << std::endl;
 		return out;

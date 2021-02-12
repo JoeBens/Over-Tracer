@@ -3,13 +3,18 @@
 #include "Color.h"
 #include "Ray.h"
 #include "Object.h"
+
+
+
+
 class Sphere : virtual public Object, public Hitable
 {
 public:
-	Sphere(const Vector3& origin, float radius, const Color &c){
+	Sphere(const Vector3& origin, float radius, const Color &c , Type t){
 		Object::m_position = origin;
 		m_radius = radius;
 		m_c = c;
+		type = t;
 	}
 
 
@@ -50,7 +55,7 @@ public:
 		record.position = ray.pointAt(root);
 		record.normal = normalAt(record.position);
 		record.m_c = m_c;
-
+		record.ty = type;
 
 		return true;
 	}
@@ -59,7 +64,7 @@ public:
 private:
 	float m_radius;
 	Color m_c;
-
+	Type type;
 
 };
 

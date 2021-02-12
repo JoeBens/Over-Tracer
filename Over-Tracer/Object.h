@@ -3,6 +3,8 @@
 #include "Ray.h"
 #include "Color.h"
 #include "Material.h"
+
+enum Type { Metal, Diffuse, Luminous };
 class Object
 {
 	public:
@@ -23,6 +25,7 @@ struct HitRecord {
 	Vector3 normal;
 	float t;
 	Color m_c;
+	Type ty;
 	//Material m_material;
 };
 

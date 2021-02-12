@@ -5,8 +5,9 @@ class Ray
 {
 public:
 	Ray(const Vector3& origin, const Vector3& direction) {
-		m_direction = direction;
-		m_direction = m_direction.normalize();
+		
+		norm = direction.norm();
+		m_direction = direction.normalize();
 		m_origin = origin;
 	}
 
@@ -17,6 +18,7 @@ public:
 		return m_direction * dist + m_origin;
 	}
 	
+	float norm;
 private:
 	Vector3 m_direction;
 	Vector3 m_origin;
