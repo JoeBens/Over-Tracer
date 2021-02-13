@@ -153,9 +153,8 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 			auto tmp = rec.normal.dot(reflected);
 			//std::cout << tmp << std::endl;
 			auto diffuse = c.multElements(objColor[0], objColor[1], objColor[2]);
-			auto specular = Vector3();
 			
-			return diffuse + specular;
+			return diffuse;
 		}
 
 
@@ -173,7 +172,9 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 	float t = 0.9 * (ray.direction())[0];
 	auto white = Color("000000");
-	auto main = Color("F7FFAD");
+	//auto main = Color("0d0d0a");
+	//auto main = Color("F7FFAD");
+	auto main = Color("000003");
 
 
 	return main * (1.0 - t) + white * t;
@@ -183,7 +184,7 @@ Color color(const Ray& ray, const HitList& world, int depth) {
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Hello Vietnaaaaaaaaaaaaam!\n";
 
 	auto color1 = std::make_shared<Color>("212121"); // plan
 	auto color2 = std::make_shared<Color>("CCCCCC"); // silver
@@ -194,10 +195,22 @@ int main()
 	// world
 	HitList world;
 	world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a"),Metal));
-	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb"), Luminous));
+	
+	world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("f9fc5b"), Metal));
 	world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b"), Metal));
+	world.add(std::make_shared<Sphere>(Vector3(0.6f, 0.5f, -1.0f), 0.15f, Color("dbf67a"), Luminous));
+	world.add(std::make_shared<Sphere>(Vector3(-0.6f, 0.5f, -1.0f), 0.15f, Color("dbf67a"), Luminous));
+	world.add(std::make_shared<Sphere>(Vector3(0.6f, -0.7f, -1.0f), 0.15f, Color("dbf67a"), Luminous));
+	world.add(std::make_shared<Sphere>(Vector3(-0.6f, -0.7f, -1.0f), 0.15f, Color("dbf67a"), Luminous));
 	world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d"), Diffuse));
-	world.add(std::make_shared<Sphere>(Vector3(-30.0f, 90.5f, -15.0f), 100.0f, Color("000000"), Diffuse));
+
+
+
+	//world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a"), Metal));
+	//world.add(std::make_shared<Sphere>(Vector3(0.0f, 0.0f, 0.0f), 0.4f, Color("ff45eb"), Metal));
+	//world.add(std::make_shared<Sphere>(Vector3(0.0f, -0.2f, 20.0f), 10.0f, Color("46676a"), Metal));
+	//world.add(std::make_shared<Sphere>(Vector3(-0.3f, 0.2f, -1.0f), 0.15f, Color("ff0b0b"), Metal));
+	//world.add(std::make_shared<Sphere>(Vector3(0.0f, 100.5f, -1.0f), 100.0f, Color("1b172d"), Diffuse));
 
 
 	//world.add(std::make_shared<Sphere>(Vector3(0.3f, 0.2f, -1.0f), 0.15f, Color("dbf67a")));
