@@ -5,8 +5,6 @@
 #include "Object.h"
 
 
-
-
 class Sphere : virtual public Object, public Hitable
 {
 public:
@@ -17,27 +15,17 @@ public:
 		type = t;
 	}
 
-
 	virtual const Vector3& normalAt(const Vector3& point) const {
 		return (Object::m_position - point).normalize();
 	}
 
-
-	virtual const Vector3& scatter(const Vector3& point) const {
-		return point;
-	}
-
-
+	//return true if the ray hits the sphere
 	virtual bool hit(const Ray& ray, float t_min, float t_max, HitRecord& record) const {
 
-		Vector3 sphereToRay = ray.origin() - m_position;
-		//std::cout<<"Sphere to ray: " << sphereToRay;
+		auto sphereToRay = ray.origin() - m_position;
 		float b = sphereToRay.dot(ray.direction())*2.0;
-		//std::cout<<"b = "<<b<<std::endl;
 		float c = sphereToRay.dot(sphereToRay) - m_radius * m_radius;
-		//std::cout<<"c = "<<c<<std::endl;
 		float delta = b * b - 4 * c;
-		//std::cout<<"delta = "<<delta<<std::endl;
 		if (delta < 0)
 			return false;
 
@@ -64,7 +52,7 @@ public:
 private:
 	float m_radius;
 	Color m_c;
-	Type type;
+	Type type; //Material type
 
 };
 

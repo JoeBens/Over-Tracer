@@ -4,10 +4,14 @@
 
 #include <memory>
 
+
+//Vector3 Utilities
+
 class Vector3
 {
 public:
 
+#pragma region Constructors
 	Vector3() {
 		m_coordinates[0] = 0.0f;
 		m_coordinates[1] = 0.0f;
@@ -25,7 +29,10 @@ public:
 		m_coordinates[2] = v[2];
 
 	}
+#pragma endregion
 
+	
+#pragma region Operators
 	inline const Vector3& operator+(const Vector3& v) const {
 		Vector3* res = new Vector3(); // empty
 
@@ -101,7 +108,10 @@ public:
 	inline float operator[](int index) const {
 		return m_coordinates[index];
 	}
+#pragma endregion
 
+
+#pragma region Operations
 	inline const Vector3& multElements(const float& e1, const float& e2, const float& e3) {
 		Vector3* res = new Vector3(m_coordinates[0] * e1,
 			m_coordinates[1] * e2,
@@ -137,7 +147,14 @@ public:
 			m_coordinates[2] * v[2];
 
 	}
+	inline static Vector3 reflect(const Vector3& in, const Vector3& normal) {
+		return in - (normal * (in.dot(normal) * 2.0f));
+	}
 
+
+#pragma endregion
+
+#pragma region Misc
 	inline static const Vector3& random() {
 		return Vector3((float)random_double(), (float)random_double(), (float)random_double());
 	}
@@ -158,9 +175,6 @@ public:
 		return random_unit_sphere()->normalize();
 	}
 
-	inline static Vector3 reflect(const Vector3& in, const Vector3& normal) {
-		return in - (normal * (in.dot(normal) * 2.0f));
-	}
 
 
 
@@ -168,12 +182,11 @@ public:
 		out << v[0] << " " << v[1] << " " << v[2] << std::endl;
 		return out;
 	}
+#pragma endregion
+
 
 
 protected:
 	float m_coordinates[3];
-
-
-
 };
 

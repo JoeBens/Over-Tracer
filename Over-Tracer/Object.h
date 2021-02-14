@@ -2,7 +2,6 @@
 #include "Vector3.h"
 #include "Ray.h"
 #include "Color.h"
-#include "Material.h"
 
 enum Type { Metal, Diffuse, Luminous };
 class Object
@@ -15,18 +14,16 @@ class Object
 		void move(const Vector3& position) {
 			m_position = position;
 		}
-
-
 	protected:
 	Vector3 m_position;
 };
+
 struct HitRecord {
 	Vector3 position;
 	Vector3 normal;
 	float t;
 	Color m_c;
 	Type ty;
-	//Material m_material;
 };
 
 
